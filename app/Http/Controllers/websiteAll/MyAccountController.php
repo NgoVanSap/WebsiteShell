@@ -104,8 +104,6 @@ class MyAccountController extends Controller
             $userUpdate->password = Hash::make($request['new_password']);;
             $userUpdate->save();
             return response()->json(['status' => 3 , 'success' => 'Change password successfully']);
-
-
         }
 
     }

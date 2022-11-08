@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\websiteAll;
 
+use App\Repositories\CountProduct;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -13,10 +14,18 @@ use Illuminate\Support\Facades\Paginator;
 
 class CategoryController extends Controller
 {
+    public $getAllRepositories;
+
+
+    public function __construct(CountProduct $getAllRepositories) {
+
+        $this->getAllRepositories = $getAllRepositories;
+
+    }
     public function index () {
 
         $dataProduct = Product::where('is_open',1)->orderBy('id','desc')->paginate(6);
-        $dataCountProduct = Product::count();
+        $dataCountProduct = Product::count('id');
         $dataProductCategoryNew = Product::where('is_open',1)->orderBy('id','desc')->take(4)->get();
 
         return view('website.categoryProduct.productAll' , [
@@ -60,17 +69,13 @@ class CategoryController extends Controller
 
 
     public function searchSizeProduct($size) {
-        $searchSizeProduct = Product::join('product_attributes','product_attributes.product_id','products.id')
-        ->select('products.*','product_attributes.size')
-        ->where('size',$size)
-        ->orderBy('id', 'desc')
-        ->paginate(6);
+        $searchSizeProduct = $this->getAllRepositories->getSearchSizeProduct($size);
         $searchSizeProductCount = Product::join('product_attributes','product_attributes.product_id','products.id')
         ->select('products.*','product_attributes.size')
         ->where('size',$size)
         ->orderBy('id', 'desc')
         ->get();
-        $dataCountProduct = Product::count();
+        $dataCountProduct = $this->getAllRepositories->getCountProduct();
 
 
         return view('website.searchSizeProduct.index',[
@@ -93,7 +98,8 @@ class CategoryController extends Controller
         ->orderBy('current_price')
         ->paginate(6);
 
-        $dataCountProduct = Product::count();
+        $dataCountProduct = $this->getAllRepositories->getCountProduct();
+
 
 
 
@@ -112,14 +118,9 @@ class CategoryController extends Controller
     }
 
     public function searchHighDownProduct () {
-        $dataSearchHighDownProduct = Product::with('comments')
-        ->with('attribute')
-        ->select('*')
-        ->addSelect(DB::raw('IF(price_sale=0, price, price_sale ) AS current_price'))
-        ->orderBy('current_price','desc')
-        ->paginate(6);
+        $dataSearchHighDownProduct = $this->getAllRepositories->getSearchHighDownProduct();
+        $dataCountProduct = $this->getAllRepositories->getCountProduct();
 
-        $dataCountProduct = Product::count();
 
 
        return view('website.searchPriceName.highDownProduct',[
@@ -136,7 +137,8 @@ class CategoryController extends Controller
         $dataSearchAtoZProduct = Product::with('comments')
         ->orderBy('name','asc')
         ->paginate(6);
-        $dataCountProduct = Product::count();
+        $dataCountProduct = $this->getAllRepositories->getCountProduct();
+
 
 
         return view('website.searchNameProduct.aTozNameProduct',[
@@ -150,7 +152,8 @@ class CategoryController extends Controller
         $dataSearchZtoAProduct = Product::with('comments')
         ->orderBy('name','desc')
         ->paginate(6);
-        $dataCountProduct = Product::count();
+        $dataCountProduct = $this->getAllRepositories->getCountProduct();
+
 
 
         return view('website.searchNameProduct.zToaNameProduct',[
@@ -164,7 +167,8 @@ class CategoryController extends Controller
     public function categoryProductSale() {
 
         $dataProductSale = Product::where('price_sale' ,'>',0)->paginate(6);
-        $dataCountProduct = Product::count();
+        $dataCountProduct = $this->getAllRepositories->getCountProduct();
+
 
         return view('website.categoryProduct.productSale',[
 

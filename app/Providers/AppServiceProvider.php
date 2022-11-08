@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
         $billProductUser = billCart::orderBy('id', 'desc')->get();
         $countProduct = Product::where('is_open','>',0)->count();
         $countProductSale = Product::where('is_open','>',0)->where('price_sale','>',0)->count();
-        $countBillCart = billCart::count();
+        $countBillCart = billCart::count('id');
         $dataBillCartMonth = billCart::select('*')
         ->where('bill_status','>=',4)
         ->whereMonth('created_at', Carbon::now()->month)
@@ -91,7 +91,7 @@ class AppServiceProvider extends ServiceProvider
 
 
         $categorys = DanhMuc::all();
-        $count = $billProductUser->count();
+        $count = $billProductUser->count('id');
         foreach($billProductUser as $billProductUsers ) {
             if($billProductUsers->bill_status > 1) {
                  -- $count;

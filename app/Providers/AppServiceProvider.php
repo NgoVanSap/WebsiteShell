@@ -38,8 +38,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $totalBillCartAll = 0;
-        $totalBillCartMonth = 0;
         $totalDateNow = 0;
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
@@ -51,11 +49,10 @@ class AppServiceProvider extends ServiceProvider
         $dataBillCartMonth = billCart::select('*')
         ->where('bill_status','>=',4)
         ->whereMonth('created_at', Carbon::now()->month)
-        ->get();
+        ->sum('amount_of_all_products');
 
-        $dataBillCartAll = billCart::select('*')
-        ->where('bill_status','>=',4)
-        ->get();
+        $dataBillCartAll = billCart::where('bill_status','>=',4)
+        ->sum('amount_of_all_products');
 
         $sellingProduct = DB::table('oder_item_checkouts')
         ->where('oder_item_checkouts.oder_status','>=',4)
@@ -69,27 +66,9 @@ class AppServiceProvider extends ServiceProvider
 
         $attributes = Attribute::all();
         $dateNow =  Carbon::now()->isoFormat('YYYY-MM-DD');
-        $dataTotalNow = billCart::where('bill_status','>=',4)->whereDate('created_at',$dateNow)->get();
-
-        foreach ($dataTotalNow as $dataTotalNows) {
-            $totalDateNow += $dataTotalNows->amount_of_all_products;
-
-        }
-
-        foreach ($dataBillCartAll as $dataBillCartAlls) {
-            $totalBillCartAll += $dataBillCartAlls->amount_of_all_products;
-        }
-
-
-        foreach($dataBillCartMonth as $dataBillCartMonths) {
-
-            $totalBillCartMonth += $dataBillCartMonths->amount_of_all_products;
-
-        }
-
-
-
-
+        $dataTotalNow = billCart::where('bill_status','>=',4)
+        ->whereDate('created_at',$dateNow)
+        ->sum('amount_of_all_products');
         $categorys = DanhMuc::all();
         $count = $billProductUser->count('id');
         foreach($billProductUser as $billProductUsers ) {
@@ -110,10 +89,10 @@ class AppServiceProvider extends ServiceProvider
 
         View::share('countProduct',$countProduct);
         View::share('countBillCart',$countBillCart);
-        View::share('totalBillCartMonth',$totalBillCartMonth);
-        View::share('totalDateNow',$totalDateNow);
+        View::share('totalBillCartMonth',$dataBillCartMonth);
+        View::share('totalDateNow',$dataTotalNow);
         View::share('dateNow',$dateNow);
-        View::share('totalBillCartAll',$totalBillCartAll);
+        View::share('totalBillCartAll',$dataBillCartAll);
         View::share('sellingProduct',$sellingProduct);
         View::share('countProductSale',$countProductSale);
         View::share('category',$categorys);

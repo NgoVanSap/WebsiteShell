@@ -28,7 +28,27 @@ class CartLists  implements CartInterface
         ->orderBy('id','desc')
         ->get();
 
-        
+
+    }
+
+    public function totalCheckout() {
+        $userId = Auth::guard('customer')->id();
+
+        $getDataBill =  DB::table('carts')
+        ->join('products', 'carts.product_id_cart','=','products.id')
+        ->join('customers','carts.user_id' ,'=','customers.id')
+        ->where('user_id','=',$userId)
+        ->select('carts.*','products.price','products.price_sale','products.id as product_id_cart','customers.id as user_id',)
+        ->get();
+
+        $transport = 15;
+        $total = 0;
+        foreach ($getDataBill as $productViewCarts) {
+
+            $total += ($productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price) * $productViewCarts->quantity;
+
+        }
+        return  $total+=$transport;
     }
 }
 

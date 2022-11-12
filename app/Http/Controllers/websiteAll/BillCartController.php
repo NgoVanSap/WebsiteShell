@@ -35,16 +35,7 @@ class BillCartController extends Controller
 
         $productViewCart = $this->viewCartList->getViewCartList();
 
-
-        $total = 0;
-        $transport = 15;
-        foreach ($productViewCart as $productViewCarts) {
-
-            $total += ($productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price) * $productViewCarts->quantity;
-
-        }
-        $total+=$transport;
-
+        $total = $this->viewCartList->totalCheckout();
 
         return view('website.checkout.checkout',[
             'productViewCart' => $productViewCart,
@@ -58,20 +49,10 @@ class BillCartController extends Controller
     public function postBillCartProduct(Request $request) {
         $userId = Auth::guard('customer')->id();
         $oder = Cart::where('user_id','=',$userId)->get();
-        $productViewCart = $this->viewCartList->getViewCartList();
-
-
         $dateNowOrder =  Carbon::now()->isoFormat('MM-DD-YYYY');
-
-
-        $total = 0;
         $transport = 15;
-        foreach ($productViewCart as $productViewCarts) {
+        $total = $this->viewCartList->totalCheckout();
 
-            $total += ($productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price) * $productViewCarts->quantity;
-
-        }
-        $total+=$transport;
 
         $validator = Validator::make($request->all(),[
             'bill_name'             => 'required',
@@ -142,21 +123,6 @@ class BillCartController extends Controller
 
             }
 
-
-
-            // Mail::send('website.emailCheckout.emailCheckOut',[
-            //     'productViewCart'           => $productViewCart,
-            //     'request'                   => $request,
-            //     'amount_of_all_products'    => $amount_of_all_products,
-            //     'bill_total'                => $bill_total,
-            //     'bill_payment'              => $bill_payment,
-            //     'dateNowOrder'              => $dateNowOrder,
-            // ], function($email) use ($request ,$productViewCart) {
-            //     $email->subject('Thank You For Your Order.');
-            //     $email->to($request->bill_email, $request->bill_name);
-
-            // });
-
             if(!empty($billCartUser)) {
                 return response()->json(['status' => 1,'success'=>'Order Success']);
                 return redirect()->route('viewCartProduct.website');
@@ -216,14 +182,6 @@ class BillCartController extends Controller
 
 
         }
-
-
-
-
-
-
-
-
 
     }
 }

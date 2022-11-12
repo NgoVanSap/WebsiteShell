@@ -110,13 +110,7 @@ class CartController extends Controller
 
                 $productViewCart = $this->viewCartList->getViewCartList();
 
-                $total = 0;
-                $transport = 15;
-                foreach ($productViewCart as $productViewCarts) {
-
-                    $total += $productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price  * $productViewCarts->quantity;
-
-                }
+                $total = $this->viewCartList->totalCheckout();
 
                 $dataSession = Session::get('total',$total);
                 return response()->json([
@@ -131,76 +125,13 @@ class CartController extends Controller
         } else {
             dd('cc');
         }
-
-        // $validator = Validator::make($request->all(),[
-
-        //     'subject'         => 'required',
-        // ],
-        // [
-
-        //     'subject.required'         => 'Coupon empty.',
-
-        // ]);
-        // $coupon = Coupon::first();
-
-        // $userId = Auth::guard('customer')->id();
-        // $productViewCart = DB::table('carts')
-        // ->join('products', 'carts.product_id_cart','=','products.id')
-        // ->join('customers','carts.user_id' ,'=','customers.id')
-        // ->where('user_id','=',$userId)
-        // ->select('carts.*','products.name','products.image','products.price','products.price_sale','products.id as product_id_cart','products.slug_name','customers.id as user_id',)
-        // ->orderBy('id','desc')
-        // ->get();
-        // $cartSaveCoupon = Cart::where('user_id', $userId)->get();
-
-
-        // if($validator->fails()) {
-
-        //     return response()->json(['status' => 0 ]);
-
-        // } else {
-
-        //     if($request->subject == $coupon->coupons_bill) {
-
-
-        //         if( $coupon->coupon_status == 1) {
-
-        //             foreach($cartSaveCoupon as $cartSaveCoupons) {
-        //                 $cartSaveCoupons->coupon_cart =  $coupon->coupon_price;
-        //                 $cartSaveCoupons->save();
-        //             }
-        //             return response()->json(['status' => 1,'success' =>'Coupon' ,'coupon' =>$coupon,'productViewCart'=> $productViewCart]);
-
-
-
-        //         } else {
-
-        //             return response()->json(['status' => 2,'error' =>'Coupon Expired ']);
-
-        //         }
-
-        //     } else {
-
-        //         return response()->json(['status' => 3,'error' =>'Coupon error']);
-        //     }
-        // }
-
-
     }
 
     public function loadCartProduct(Request $request) {
         $coupon = Coupon::first();
 
         $productViewCart = $this->viewCartList->getViewCartList();
-
-
-        $total = 0;
-        $transport = 15;
-        foreach ($productViewCart as $productViewCarts) {
-
-            $total += $productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price  * $productViewCarts->quantity;
-
-        }
+        $total = $this->viewCartList->totalCheckout();
 
         return response()->json([
 
@@ -213,7 +144,10 @@ class CartController extends Controller
     public function updateCartProduct(Request $request ) {
 
         $data = Attribute::where('product_id',$request->car_detail)->get();
-        $cartAdd = Cart::where('user_id', $request->user_id)->where('product_id_cart',$request->product_id_cart)->where('cart_id_attribute',$request->cart_id_attribute)->first();
+        $cartAdd = Cart::where('user_id', $request->user_id)
+        ->where('product_id_cart',$request->product_id_cart)
+        ->where('cart_id_attribute',$request->cart_id_attribute)
+        ->first();
 
         if(!empty($cartAdd)) {
 
@@ -239,7 +173,7 @@ class CartController extends Controller
         $data = Cart::where('id',$id)->first();
         $userId = Auth::guard('customer')->id();
 
-        $dataCartCount = Cart::where('user_id',$userId)->count();
+        $dataCartCount = Cart::where('user_id',$userId)->count('id');
         if(!empty($data)) {
             $data->delete();
             return response()->json([

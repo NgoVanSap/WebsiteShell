@@ -194,32 +194,6 @@
             });
         });
 
-        //Update Member
-        $("#updateMember").on("click", function () {
-
-            var id  = $("#member_id").val();
-            var role = $("#role_id").val();
-
-
-            var data = {
-                'id'   :id,
-                'role' : role,
-            };
-
-            $.ajax({
-                url: "/admin/home/More-members/update",
-                type: "POST",
-                data: data,
-                success: function(res) {
-                    if(res.status == true) {
-                        window.location.reload();
-                        toastr.success('Update Member successfully');
-                    }
-                }
-
-            });
-
-        });
 
         //Edit Member Errror
         $(".toartsErrorEditMember").click(function () {

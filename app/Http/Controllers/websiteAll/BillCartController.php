@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\websiteAll;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Cart;
-use App\Models\Attribute;
-use App\Models\Product;
-use App\Models\billCart;
-use App\Models\oderItemCheckout;
-use Carbon\Carbon;
 use DB;
 use Auth;
 use Mail;
 use Validator;
+use Carbon\Carbon;
+use App\Models\Cart;
+use App\Jobs\SendMail;
+use App\Models\Product;
+use App\Models\billCart;
+use App\Models\Attribute;
+use Illuminate\Http\Request;
 use App\Repositories\CartLists;
+use App\Repositories\OrderItem;
+use App\Models\oderItemCheckout;
+use App\Http\Controllers\Controller;
 
 
 
@@ -23,10 +25,13 @@ class BillCartController extends Controller
 {
 
     public $viewCartList;
+    public $orderItems;
 
-    public function __construct(CartLists $viewCartList) {
+
+    public function __construct(CartLists $viewCartList,OrderItem $orderItems) {
 
         $this->viewCartList = $viewCartList;
+        $this->orderItems = $orderItems;
 
     }
 
@@ -95,7 +100,7 @@ class BillCartController extends Controller
         } else {
 
            $billCartUser = billCart::create([
-                 'bill_user_id'                  => $bill_user_id,
+                 'bill_user_id'                 => $bill_user_id,
                  'bill_name'                    => $bill_name,
                  'bill_phone'                   => $bill_phone,
                  'bill_email'                   => $bill_email,
@@ -106,11 +111,10 @@ class BillCartController extends Controller
                  'amount_of_all_products'       => $amount_of_all_products,
                  'bill_status'                  => 1,
            ]);
-
-
+           $id = $billCartUser->id;
            foreach($oder as $oderItems) {
 
-             oderItemCheckout::create([
+             $data = oderItemCheckout::create([
                 'oder_product_id'           => $oderItems->product_id_cart,
                 'oder_user_id'              => $oderItems->user_id,
                 'oder_bill_cart_id'         => $billCartUser->id,
@@ -122,6 +126,16 @@ class BillCartController extends Controller
                ]);
 
             }
+            $orderDetails = $this->orderItems->getOrderItems($id);
+            $orderItem = DB::table('oder_item_checkouts')
+            ->join('products','oder_item_checkouts.oder_product_id','=','products.id')
+            ->where('oder_item_checkouts.oder_user_id','=',$orderDetails->bill_user_id)
+            ->whereTime('oder_item_checkouts.created_at','=',$orderDetails->created_at)
+            ->select('oder_item_checkouts.*','products.name','products.image','products.price','products.price_sale','products.id as product_id_cart','products.slug_name')
+            ->get();
+
+
+            SendMail::dispatch($request->bill_email,$orderItem,$billCartUser,$dateNowOrder)->delay(now()->addMinutes(1));
 
             if(!empty($billCartUser)) {
                 return response()->json(['status' => 1,'success'=>'Order Success']);

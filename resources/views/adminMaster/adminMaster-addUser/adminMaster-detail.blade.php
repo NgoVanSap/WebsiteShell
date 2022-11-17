@@ -1,8 +1,11 @@
 @extends('adminMaster.master')
 <style>
-    label.error {
+    p.error-text {
          color: #dc3545;
-         font-size: 10px;
+         font-size: 12px;
+    }
+    input.failError {
+        border: 1px solid red !important;
     }
 </style>
 @section('content')
@@ -73,23 +76,25 @@
                                             <div class="form-row">
                                                 <div class="form-group col-md-12">
                                                     <label for="name1">Full Name</label>
-                                                    <input type="text" class="form-control" name="username" id="name1" value="{{ old('username' ,$detailMember->username) }}">
+                                                    <input type="text" class="form-control error-text username_error" name="username" id="name1" value="{{ old('username' ,$detailMember->username) }}">
+                                                    <p class="text-danger error-text username_error"></p>
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label for="email1">Email</label>
-                                                    <input type="email" class="form-control" name="email" id="email1" value="{{ old('email' ,$detailMember->email) }}">
+                                                    <input type="email" class="form-control error-text email_error" name="email" id="email1" value="{{ old('email' ,$detailMember->email) }}">
+                                                    <p class="text-danger error-text email_error"></p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="add1">Position</label>
                                                 <div class="form-group">
-                                                    <select class="custom-select custom-select-sm" name="role" required="">
+                                                    <select class="custom-select custom-select-sm" id="roleAdmin" name="role" required="">
                                                         <option value="2" {{ old('role', $detailMember->role) == 2 ? 'selected' : '' }} >Admin</option>
                                                         <option value="1" {{ old('role', $detailMember->role) == 1 ? 'selected' : '' }}>Staff</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-outline-success">Update Information</button>
+                                            <button type="submit" id="updateMember" data-id="{{  $detailMember->id }}" class="btn btn-outline-success">Update Information</button>
                                             <a href="{{ route('home.admin.Moremembers') }}" class="btn btn-outline-danger">Cancel</a>
                                         </form>
                                     </div>
@@ -107,36 +112,53 @@
 @endsection
 @section('js')
     <script>
+        $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
         $(document).ready(function () {
-            if($("#form").length > 0) {
-                $("#form").validate({
-                rules : {
-                   username : {
-                       required : true,
-                   },
-                   email : {
-                       required : true,
-                       email    : true,
-                   }
-                },
-                messages : {
-                    username : {
-                        required : "User Name cannot be left blank.",
-                    },
-                    email : {
-                        required : "Email cannot be blank.",
-                        email    : "Email must be in the correct format.",
-                    },
-                },
 
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                }
-             });
-            }
+        //Update Member
+            $("#updateMember").on("click", function (e) {
+
+                    e.preventDefault();
+
+                        var email  = $("input[name='email']").val();
+                        var username = $("input[name='username']").val();
+                        var role = $('#roleAdmin').find(":selected").val();
+                        var id = $(this).data('id')
+
+                        var data = {
+                            'email'   :email,
+                            'username' : username,
+                            'role'    : role,
+                            'id'       :id ,
+                        };
+                        console.log(data)
+
+
+                    $.ajax({
+                        url: "/admin/home/More-members/update",
+                        type: "POST",
+                        data: data,
+                        beforeSend:function () {
+                            $(document).find('p.error-text').text('');
+                            $(document).find('input.error-text').removeClass('failError');
+                        },
+                        success: function(res) {
+                            if(res.status == 0) {
+                                $.each(res.error, function (prefix, value) {
+                                $('p.'+prefix+'_error').text(value[0]);
+                                $('input.'+prefix+'_error').addClass('failError');
+                            });
+                            } else {
+                                location.reload();
+                            }
+                        }
+
+                    });
+            });
 
         });
     </script>

@@ -48,8 +48,6 @@
     </div>
 </section>
 
-
-
 <section class="pages products-page section-padding-bottom">
     <div class="container">
         <div class="row">

@@ -29,9 +29,9 @@
                                         <table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner" style="border-bottom: 1px solid #eeeeee; text-align: center;">
                                             <tbody>
                                                 <tr>
-                                                    <td style="padding-bottom: 10px;">
+                                                    {{-- <td style="padding-bottom: 10px;">
                                                         <a href="{{ route('website.index') }}"><img src="{{ $message->embed(public_path().'/assetsWebsite1/img/logo.png') }}" alt="PapaChina" /></a>
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
                                                 <tr>
                                                     <td style="font-size: 14px; line-height: 18px; color: #666666;">
@@ -75,10 +75,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 55%; font-size: 14px; line-height: 18px; color: #666666;">
-                                                        {{ $request->bill_address }}
+                                                        {{ $billCartUser['bill_address'] }}
                                                     </td>
                                                     <td style="width: 45%; font-size: 14px; line-height: 18px; color: #666666;">
-                                                        {{ $request->bill_address }}
+                                                        {{ $billCartUser['bill_address'] }}
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -88,7 +88,7 @@
                                 <!-- End address Section -->
 
                                 <!-- Start product Section -->
-                                @foreach ($productViewCart as $productViewCarts)
+                                @foreach ($orderItem as $productViewCarts)
                                 <tr>
                                     <td style="padding-top: 0;">
                                         <table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner" style="border-bottom: 1px solid #eeeeee;">
@@ -103,7 +103,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; width: 440px;">
-                                                        Quantity: {{ $productViewCarts->quantity }}
+                                                        Quantity: {{ $productViewCarts->oder_quantity }}
                                                     </td>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; text-align: right;">
                                                         ${{ number_format($productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price ,1) }} Per Unit
@@ -111,11 +111,11 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; padding-bottom: 10px;">
-                                                        Size: {{ $productViewCarts->cart_id_attribute }}
+                                                        Size: {{ $productViewCarts->oder_cart_id_attribute }}
                                                     </td>
                                                     @php
                                                         $totalProduct = 0;
-                                                        $totalProduct = ($productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price) * $productViewCarts->quantity;
+                                                        $totalProduct = ($productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price) * $productViewCarts->oder_quantity;
                                                     @endphp
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; text-align: right; padding-bottom: 10px;">
                                                         <b style="color: #666666;">${{ number_format($totalProduct ,1) }}</b> Total
@@ -140,7 +140,7 @@
                                                         Sub-Total:
                                                     </td>
                                                     <td style="font-size: 14px; line-height: 18px; color: #666666; width: 130px; text-align: right;">
-                                                        ${{ number_format($amount_of_all_products,1) }}
+                                                        ${{ number_format($billCartUser['amount_of_all_products'],1) }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -159,7 +159,7 @@
                                                         Order Total
                                                     </td>
                                                     <td style="font-size: 14px; font-weight: bold; line-height: 18px; color: #666666; padding-top: 10px; text-align: right;">
-                                                        ${{ number_format($bill_total,1) }}
+                                                        ${{ number_format($billCartUser['bill_total'],1) }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -167,7 +167,7 @@
                                                         Deposit Amount:
                                                     </td>
                                                     <td style="font-size: 14px; font-weight: bold; line-height: 18px; color: #666666; text-align: right;">
-                                                        ${{ number_format($bill_total,1) }}
+                                                        ${{ number_format($billCartUser['bill_total'],1) }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -175,7 +175,7 @@
                                                         Payment:
                                                     </td>
                                                     <td style="font-size: 14px; font-weight: bold; line-height: 18px; color: #666666; text-align: right; padding-bottom: 12px;">
-                                                        {{ $bill_payment }}
+                                                        {{ $billCartUser['bill_payment'] }}
                                                     </td>
                                                 </tr>
 

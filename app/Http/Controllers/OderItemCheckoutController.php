@@ -49,9 +49,10 @@ class OderItemCheckoutController extends Controller
 
         $orderItems = DB::table('oder_item_checkouts')
         ->join('products','oder_item_checkouts.oder_product_id','=','products.id')
+        ->join('product_attributes','oder_item_checkouts.oder_cart_id_attribute','=','product_attributes.id')
         ->where('oder_item_checkouts.oder_user_id','=',$orderDetails->bill_user_id)
         ->whereTime('oder_item_checkouts.created_at','=',$orderDetails->created_at)
-        ->select('oder_item_checkouts.*','products.name','products.image','products.price','products.price_sale','products.id as product_id_cart','products.slug_name')
+        ->select('oder_item_checkouts.*','products.name','products.image','products.price','products.price_sale','products.id as product_id_cart','products.slug_name','product_attributes.size')
         ->get();
 
 

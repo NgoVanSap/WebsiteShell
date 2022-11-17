@@ -1,5 +1,6 @@
 @extends('website.master')
 @section('content')
+
 <div class="main-slider-one slider-area">
     <div id="wrapper">
         <div class="slider-wrapper">
@@ -107,7 +108,7 @@
                                             <input type="hidden" value="{{ $productFeatureds->id }}" name="product_id_cart">
                                             <input type="hidden" value="1" name="quantity">
                                             <input type="hidden" value="{{ $productFeatureds->price_sale > 0 ? $productFeatureds->price_sale : $productFeatureds->price }}" name="cart_price">
-                                            <input type="hidden" value="{{ $productFeatureds->attribute[0]->size }}" name="cart_id_attribute">
+                                            <input type="hidden" value="{{ $productFeatureds->attribute[0]->id }}" name="cart_id_attribute">
                                             <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                             <a class="addCart" data-id="{{ $productFeatureds->id }}"><i  class="mdi mdi-cart"></i></a>
 
@@ -319,7 +320,7 @@
                                             <input type="hidden" value="{{ $dataNews->id }}" name="product_id_cart">
                                             <input type="hidden" value="1" name="quantity">
                                             <input type="hidden" value="{{ $dataNews->price_sale > 0 ?  $dataNews->price_sale : $dataNews->price }}" name="cart_price">
-                                            <input type="hidden" value="{{ $dataNews->attribute[0]->size }}" name="cart_id_attribute">
+                                            <input type="hidden" value="{{ $dataNews->attribute[0]->id }}" name="cart_id_attribute">
                                             <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                             <a class="addCart" data-id="{{ $dataNews->id }}"><i  class="mdi mdi-cart"></i></a>
                                             <a href="#" data-toggle="modal" data-target="#quick-view_{{ $dataNews->slug_name }}"><i class="mdi mdi-eye"></i></a>
@@ -368,7 +369,7 @@
                                                 <div class="actions-btn">
                                                     <input type="hidden" value="{{ $productFeatureds->id }}" name="product_id_cart">
                                                     <input type="hidden" value="1" name="quantity">
-                                                    <input type="hidden" value="{{ $productFeatureds->attribute[0]->size }}" name="cart_id_attribute">
+                                                    <input type="hidden" value="{{ $productFeatureds->attribute[0]->id }}" name="cart_id_attribute">
                                                     <input type="hidden" value="{{ $productFeatureds->price_sale > 0 ? $productFeatureds->price_sale : $productFeatureds->price }}" name="cart_price">
                                                     <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                                     <a class="addCart" data-id="{{ $productFeatureds->id }}"><i  class="mdi mdi-cart"></i></a>
@@ -420,7 +421,7 @@
                                                 <div class="actions-btn">
                                                     <input type="hidden" value="{{ $dataSales->id }}" name="product_id_cart">
                                                     <input type="hidden" value="1" name="quantity">
-                                                    <input type="hidden" value="{{ $dataSales->attribute[0]->size }}" name="cart_id_attribute">
+                                                    <input type="hidden" value="{{ $dataSales->attribute[0]->id }}" name="cart_id_attribute">
                                                     <input type="hidden" value="{{ $dataSales->price_sale > 0 ?  $dataSales->price_sale : $dataSales->price }}" name="cart_price">
                                                     <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                                     <a class="addCart" data-id="{{ $dataSales->id }}"><i  class="mdi mdi-cart"></i></a>
@@ -651,9 +652,9 @@
                                                                 <div class="btn-group">
                                                                     <div class="select-wrap">
                                                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                                        <select name="cart_id_attribute" id="myselect1_{{ $productDetailModals->id }}" class="form-control">
+                                                                        <select name="cart_id_attribute" data-id="{{ $productDetailModals->id }}" id="myselect1_{{ $productDetailModals->id }}" class="form-control target">
                                                                             @foreach ($productDetailModals->attribute as $productDetailModalSize)
-                                                                            <option  value="{{ $productDetailModalSize->size }}">{{ $productDetailModalSize->size }}</option>
+                                                                            <option  value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -674,7 +675,7 @@
                                                     <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                                     <input type="hidden" value="{{ $productDetailModals->id }}" name="product_id_cart">
                                                     <input type="hidden" value="{{ $productDetailModals->price_sale > 0 ? $productDetailModals->price_sale : $productDetailModals->price }}" name="price_cart_product">
-                                                    <a class="addCart-2" data-id="{{ $productDetailModals->id }}">add to cart</a>
+                                                    <a class="addCart-2 addSizeClass_{{ $productDetailModals->id }}"  data-id="{{ $productDetailModals->id }}">add to cart</a>
                                                     <a style="cursor: pointer" class="addWishList" data-id="{{ $productDetailModals->id }}" data-user-id="{{ Auth::guard('customer')->id() }}">wishlist</a>
                                                     </div>
                                                     <div class="share-tag clearfix">

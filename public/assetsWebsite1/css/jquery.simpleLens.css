@@ -15,6 +15,11 @@
 .simpleLens-big-image {
     width: 100%;
 }
+a.disabled {
+    pointer-events: none !important;
+    cursor: default;
+    color:Gray;
+}
 .simpleLens-lens-image {
     height: auto !important;
     width: 350px;

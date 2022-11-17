@@ -216,7 +216,7 @@
                                                 <input type="hidden" value="{{ $searchSizeProducts->id }}" name="product_id_cart">
                                                 <input type="hidden" value="1" name="quantity">
                                                 <input type="hidden" value="{{ $searchSizeProducts->price_sale > 0 ? $searchSizeProducts->price_sale : $searchSizeProducts->price }}" name="cart_price">
-                                                <input type="hidden" value="{{ $searchSizeProducts->attribute[0]->size }}" name="cart_id_attribute">
+                                                <input type="hidden" value="{{ $searchSizeProducts->attribute[0]->id }}" name="cart_id_attribute">
                                                 <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                                 <a class="addCart" data-id="{{ $searchSizeProducts->id }}"><i  class="mdi mdi-cart"></i></a>
                                                 <a href="#" data-toggle="modal" data-target="#quick-view_{{ $searchSizeProducts->slug_name }}"><i class="mdi mdi-eye"></i></a>
@@ -292,7 +292,7 @@
                                                         <input type="hidden" value="{{ $searchSizeProducts->id }}" name="product_id_cart">
                                                         <input type="hidden" value="1" name="quantity">
                                                         <input type="hidden" value="{{ $searchSizeProducts->price_sale > 0 ? $searchSizeProducts->price_sale : $searchSizeProducts->price }}" name="cart_price">
-                                                        <input type="hidden" value="{{ $searchSizeProducts->attribute[0]->size }}" name="cart_id_attribute">
+                                                        <input type="hidden" value="{{ $searchSizeProducts->attribute[0]->id }}" name="cart_id_attribute">
                                                         <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                                         <a class="addCart" data-id="{{ $searchSizeProducts->id }}"><i  class="mdi mdi-cart"></i></a>
                                                         <a style="cursor: pointer" class="addWishList" data-id="{{ $searchSizeProducts->id }}" data-user-id="{{ Auth::guard('customer')->id() }}">wishlist</a>
@@ -391,7 +391,7 @@
                                                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                                     <select name="cart_id_attribute" id="myselect1_{{ $productDetailModals->id }}" class="form-control">
                                                                         @foreach ($productDetailModals->attribute as $productDetailModalSize)
-                                                                           <option value="{{ $productDetailModalSize->size }}">{{ $productDetailModalSize->size }}</option>
+                                                                           <option value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                   </div>

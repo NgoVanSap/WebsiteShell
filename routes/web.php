@@ -2,21 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\DanhMucController;
-use App\Http\Controllers\OderItemCheckoutController;
 use App\Http\Controllers\ViewUserComment;
-use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\websiteAll\WebsiteController;
-use App\Http\Controllers\websiteAll\WebsiteDetailProductController;
-use App\Http\Controllers\websiteAll\CategoryController;
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\websiteAll\CartController;
-use App\Http\Controllers\websiteAll\WishlistController;
-use App\Http\Controllers\websiteAll\UserCommentProductController;
-use App\Http\Controllers\websiteAll\MyAccountController;
-use App\Http\Controllers\websiteAll\BillCartController;
-use App\Http\Controllers\websiteAll\CustomerController;
+use App\Http\Controllers\OderItemCheckoutController;
 use App\Http\Controllers\websiteAll\SearchController;
+use App\Http\Controllers\websiteAll\WebsiteController;
+use App\Http\Controllers\websiteAll\BillCartController;
+use App\Http\Controllers\websiteAll\CategoryController;
+use App\Http\Controllers\websiteAll\CustomerController;
+use App\Http\Controllers\websiteAll\WishlistController;
+use App\Http\Controllers\websiteAll\MyAccountController;
+use App\Http\Controllers\websiteAll\ChangeSizeController;
+use App\Http\Controllers\websiteAll\UserCommentProductController;
+use App\Http\Controllers\websiteAll\WebsiteDetailProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -209,6 +210,8 @@ Route::prefix('/')->group(function () {
     Route::get('customer/logout' , [CustomerController::class, 'customerLogout'])->name('customerLogout.website');
 
     Route::get('search/ajax' , [SearchController::class, 'searchAjaxProduct'])->name('searchAjaxProduct.website');
+    Route::get('change/sizeAttribute/{idAttributes}' , [ChangeSizeController::class, 'changeSizeAttribute']);
+
 
 
 

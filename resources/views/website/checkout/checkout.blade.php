@@ -72,8 +72,8 @@
                                     <tbody>
                                         @foreach ($productViewCart as  $productViewCarts)
                                         <tr>
-                                            <th>{{$productViewCarts->name  }}x{{ $productViewCarts->quantity }}</th>
-                                            <td style="text-align: center;padding-right: 0 !important;">{{$productViewCarts->cart_id_attribute }}</td>
+                                            <th>{{$productViewCarts->name  }}     x{{ $productViewCarts->quantity }}</th>
+                                            <td style="text-align: center;padding-right: 0 !important;"> {{$productViewCarts->cart_id_attribute }}</td>
 
                                             @if ($productViewCarts->price_sale > 0)
 

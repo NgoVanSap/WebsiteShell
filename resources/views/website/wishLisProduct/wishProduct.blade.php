@@ -56,7 +56,7 @@
                                                 <p class="itemcolor">Size   :
                                                     <select class="custom-select custom-select-sm" id="myselect3_{{ $getWishListProducts->id}}" name="cart_id_attribute" required="" style=" width: 40px; ">
                                                         @foreach ($getWishListProducts->attribute as $getWishListProductsAttributeValue)
-                                                        <option value="{{ $getWishListProductsAttributeValue->size }}">{{ $getWishListProductsAttributeValue->size }}</option>
+                                                        <option value="{{ $getWishListProductsAttributeValue->id }}">{{ $getWishListProductsAttributeValue->size }}</option>
                                                         @endforeach
                                                     </select>
                                                     </p>

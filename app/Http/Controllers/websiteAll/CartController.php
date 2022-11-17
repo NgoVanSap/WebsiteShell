@@ -37,7 +37,6 @@ class CartController extends Controller
             'quantity'         => 'required|numeric',
         ],
         [
-
             'quantity.numeric'         => 'Quantity must equal number',
 
         ]);
@@ -45,6 +44,8 @@ class CartController extends Controller
         $product  = Product::find($id);
         $data = Attribute::where('product_id',$request->car_detail)->get();
         $cartAdd = Cart::where('user_id', $request->user_id)->where('product_id_cart',$request->product_id_cart)->where('cart_id_attribute',$request->cart_id_attribute)->first();
+        $dataMountAttribute = Attribute::where('id', $request->cart_id_attribute)->first();
+
 
 
             if(Auth::guard('customer')->check()) {
@@ -55,24 +56,31 @@ class CartController extends Controller
 
                 } else {
 
-                    if(!empty($cartAdd)) {
+                    if($dataMountAttribute->amount < $request->quantity) {
 
-                        $cartAdd->quantity += $request->quantity;
-                        $cartAdd->save();
-                        return response()->json(['status' => 1,'success' =>'Add to cart successfully' ]);
+                            return response()->json(['status' => 5,'error' =>'Quantity is greater than the remaining quantity' ]);
+
                     } else {
+                        if(!empty($cartAdd)) {
 
-                        Cart::create([
+                            $cartAdd->quantity += $request->quantity;
+                            $cartAdd->save();
+                            return response()->json(['status' => 1,'success' =>'Add to cart successfully' ]);
+                        } else {
 
-                            'product_id_cart'   => $request->product_id_cart,
-                            'quantity'          => $request->quantity,
-                            'cart_id_attribute' => $request->cart_id_attribute,
-                            'user_id'           => $request->user_id,
-                            'cart_price'        => $request->cart_price,
-                        ]);
-                        return response()->json(['status' => 1,'success' =>'Add to cart successfully']);
+                            Cart::create([
 
+                                'product_id_cart'   => $request->product_id_cart,
+                                'quantity'          => $request->quantity,
+                                'cart_id_attribute' => $request->cart_id_attribute,
+                                'user_id'           => $request->user_id,
+                                'cart_price'        => $request->cart_price,
+                            ]);
+                            return response()->json(['status' => 1,'success' =>'Add to cart successfully']);
+
+                        }
                     }
+
                 }
 
 
@@ -124,7 +132,7 @@ class CartController extends Controller
             }
 
         } else {
-            dd('cc');
+            dd('error');
         }
     }
 

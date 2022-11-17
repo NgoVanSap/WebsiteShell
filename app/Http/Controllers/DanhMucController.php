@@ -30,7 +30,7 @@ class DanhMucController extends Controller
         $data = DanhMuc::create([
             'namecategory' => $request->namecategory,
         ]);
-        if(!empty($data)) {
+        if($data->count() > 0) {
             toastr()->success('Add successful category');
             return redirect()->route('category.admin');
         } else {
@@ -135,7 +135,7 @@ class DanhMucController extends Controller
         $data = DanhMuc::find($id);
 
 
-        if($data) {
+        if($data->count() > 0) {
             return response()->json([
 
                 'status' => true ,
@@ -155,7 +155,7 @@ class DanhMucController extends Controller
     {
         $delete = DanhMuc::find($id);
 
-        if($delete) {
+        if($delete->count() > 0) {
             $delete->product()->delete();
             $delete->delete();
             return response()->json([

@@ -50,7 +50,7 @@ class ProductController extends Controller
             ]);
         }
 
-        if(!empty($data)) {
+        if($data->count() > 0) {
             toastr()->success('More Successful Products');
             return redirect()->route('product.admin');
         }

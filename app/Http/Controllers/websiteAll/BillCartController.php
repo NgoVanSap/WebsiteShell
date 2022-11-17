@@ -90,9 +90,6 @@ class BillCartController extends Controller
         $amount_of_all_products = $total-=$transport;
 
 
-
-
-
         if(!$validator->passes()) {
 
             return response()->json(['status' => 0 , 'error' => $validator->errors()->toArray()]);
@@ -124,6 +121,17 @@ class BillCartController extends Controller
                 'oder_status'               => 1,
 
                ]);
+
+            }
+
+            if($data->count() > 0) {
+
+                $updateAttribute = Attribute::where('id','=',$data->oder_cart_id_attribute)->first();
+
+                if(!empty($updateAttribute)) {
+                    $updateAttribute->amount = $updateAttribute->amount - $data->oder_quantity;
+                    $updateAttribute->save();
+                }
 
             }
             $orderDetails = $this->orderItems->getOrderItems($id);

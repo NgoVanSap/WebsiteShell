@@ -37,7 +37,7 @@
                                       </td>
                                       <td>{{ $orderItems->name }}</td>
                                       <td>x{{ $orderItems->oder_quantity}}</td>
-                                      <td>{{ $orderItems->oder_cart_id_attribute }}</td>
+                                      <td>{{ $orderItems->size }}</td>
                                       <td>${{ $orderItems->oder_price }}</td>
                                     </tr>
                                   </tbody>

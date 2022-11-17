@@ -379,6 +379,18 @@
                             stopOnFocus: true,
                             }).showToast();
 
+                        }  else if(data.status == 5) {
+                            Toastify({
+                                text: data.error,
+                                duration: 2000,
+                                className: "infoCustomerToastError",
+                                newWindow: true,
+                                close: false,
+                                gravity: "top",
+                                position: "right",
+                                stopOnFocus: true,
+                            }).showToast();
+
                         }
                    },
                 });
@@ -463,7 +475,19 @@
                         stopOnFocus: true,
                     }).showToast();
 
-                    }
+                    }  else if(data.status == 5) {
+                            Toastify({
+                                text: data.error,
+                                duration: 2000,
+                                className: "infoCustomerToastError",
+                                newWindow: true,
+                                close: false,
+                                gravity: "top",
+                                position: "right",
+                                stopOnFocus: true,
+                            }).showToast();
+
+                        }
                 },
 
                 error: function (data) {
@@ -547,7 +571,19 @@
                         stopOnFocus: true,
                         }).showToast();
 
-                    }
+                        } else if(data.status == 5) {
+                            Toastify({
+                                text: data.error,
+                                duration: 2000,
+                                className: "infoCustomerToastError",
+                                newWindow: true,
+                                close: false,
+                                gravity: "top",
+                                position: "right",
+                                stopOnFocus: true,
+                            }).showToast();
+
+                        }
                 },
             });
 
@@ -1014,6 +1050,30 @@
 
 
         });
+        function changeSizeAttribute () {
+            $( ".target" ).change(function() {
+                var idAttributes = $(this).find(":selected").val();
+                var thisDataID = $(this).data('id');
+
+                $.ajax({
+                    url:"change/sizeAttribute/"+idAttributes,
+                    type: "GET",
+                    success: function (data) {
+                        if(data.status == 1) {
+                            $(".addSizeClass_"+thisDataID+"").addClass('disabled');
+
+                        } else {
+                            $(".addSizeClass_"+thisDataID+"").removeClass('disabled');
+
+                        }
+
+                    }
+
+                });
+
+            });
+        }
+        changeSizeAttribute ();
 
     });
 

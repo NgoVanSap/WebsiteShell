@@ -94,7 +94,7 @@
                                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                     <select name="cart_id_attribute" id="myselect3_{{ $detailProduct['id'] }}" class="form-control">
                                                         @foreach ($detailProduct->attribute as $productDetailModalSize)
-                                                        <option value="{{ $productDetailModalSize->size }}">{{ $productDetailModalSize->size }}</option>
+                                                        <option value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -233,7 +233,7 @@
                             <input type="hidden" value="{{ $relatedProducts->id }}" name="product_id_cart">
                             <input type="hidden" value="1" name="quantity">
                             <input type="hidden" value="{{ $relatedProducts->price_sale > 0 ? $relatedProducts->price_sale : $relatedProducts->price }}" name="cart_price">
-                            <input type="hidden" value="{{ $relatedProducts->attribute[0]->size }}" name="cart_id_attribute">
+                            <input type="hidden" value="{{ $relatedProducts->attribute[0]->id }}" name="cart_id_attribute">
                             <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                             <a class="addCart" data-id="{{ $relatedProducts->id }}"><i  class="mdi mdi-cart"></i></a>
                             <a href="#" data-toggle="modal" data-target="#quick-view_{{ $relatedProducts->slug_name }}"><i class="mdi mdi-eye"></i></a>
@@ -314,7 +314,7 @@
                                                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                                     <select name="cart_id_attribute" id="myselect2_{{ $detailProduct['id'] }}" class="form-control">
                                                                         @foreach ($detailProduct->attribute as $productDetailModalSize)
-                                                                        <option value="{{ $productDetailModalSize->size }}">{{ $productDetailModalSize->size }}</option>
+                                                                        <option value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -422,7 +422,7 @@
                                                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                                         <select name="cart_id_attribute" id="myselect1_{{ $relatedProducts->id }}" class="form-control">
                                                                             @foreach ($relatedProducts->attribute as $productDetailModalSize)
-                                                                            <option  value="{{ $productDetailModalSize->size }}">{{ $productDetailModalSize->size }}</option>
+                                                                            <option  value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>

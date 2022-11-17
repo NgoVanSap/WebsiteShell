@@ -22,9 +22,10 @@ class CartLists  implements CartInterface
 
         return DB::table('carts')
         ->join('products', 'carts.product_id_cart','=','products.id')
+        ->join('product_attributes','carts.cart_id_attribute','=','product_attributes.id')
         ->join('customers','carts.user_id' ,'=','customers.id')
         ->where('user_id','=',$userId)
-        ->select('carts.*','products.name','products.image','products.price','products.price_sale','products.id as product_id_cart','products.slug_name','customers.id as user_id',)
+        ->select('carts.*','products.name','products.image','products.price','products.price_sale','products.id as product_id_cart','products.slug_name','customers.id as user_id','product_attributes.size as cart_id_attribute')
         ->orderBy('id','desc')
         ->get();
 
@@ -36,9 +37,10 @@ class CartLists  implements CartInterface
 
         $getDataBill =  DB::table('carts')
         ->join('products', 'carts.product_id_cart','=','products.id')
+        ->join('product_attributes','carts.cart_id_attribute','=','product_attributes.id')
         ->join('customers','carts.user_id' ,'=','customers.id')
         ->where('user_id','=',$userId)
-        ->select('carts.*','products.price','products.price_sale','products.id as product_id_cart','customers.id as user_id',)
+        ->select('carts.*','products.price','products.price_sale','products.id as product_id_cart','customers.id as user_id','product_attributes.size as cart_id_attribute ')
         ->get();
 
         $transport = 15;

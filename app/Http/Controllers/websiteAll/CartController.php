@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\websiteAll;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Cart;
-use App\Models\Attribute;
-use App\Models\Coupon;
-use App\Models\Product;
-use App\Models\billCart;
-use App\Http\Requests\AddToCartRequest;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Cookie;
 use DB;
 use Auth;
 use Validator;
+use App\Models\Cart;
+use App\Models\Coupon;
+use App\Models\Product;
+use App\Models\billCart;
+use App\Models\Attribute;
+use Illuminate\Http\Request;
+use App\Jobs\LoadCartProduct;
 use App\Repositories\CartLists;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cookie;
+use App\Http\Requests\AddToCartRequest;
+use Illuminate\Support\Facades\Session;
 
 
 
@@ -128,7 +129,6 @@ class CartController extends Controller
     }
 
     public function loadCartProduct(Request $request) {
-        $coupon = Coupon::first();
 
         $productViewCart = $this->viewCartList->getViewCartList();
         $total = $this->viewCartList->totalCheckout();
@@ -136,7 +136,7 @@ class CartController extends Controller
         return response()->json([
 
             'productViewCart' => $productViewCart,
-            'total' => $total,
+            'total'           => $total,
 
         ]);
     }

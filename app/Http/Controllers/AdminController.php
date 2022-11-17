@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -126,8 +127,8 @@ class AdminController extends Controller
     {
 
         $validate = $request->validate([
-            'email'         => 'required|email|unique:admins',
-            'username'      => 'required|unique:admins',
+            'email'         => 'required|email|unique:admins,email,',
+            'username'      => 'required|unique:admins,username,',
             'password'      => 'required|max:20|min:6',
             're_password'   => 'required|same:password',
             'role'          => 'required',
@@ -195,17 +196,27 @@ class AdminController extends Controller
     public function updateMoremembers (Request $request)
     {
 
-        $email       = $request->email;
-        $username    = $request->username;
-        $role        = $request->role;
-
-        $dataUpdateMember = Admin::where('id','=', $request->id)->update([
-
-            'email'         => $email,
-            'username'      => $username,
-            'role'          => $role,
-
+        $validator = Validator::make($request->all(),[
+            'email'         => 'required|email|unique:admins,email,'.$request->id,
+            'username'      => ['required', 'max:60', Rule::unique('admins')->ignore($request->id)],
+            'role'          => 'required',
         ]);
+
+        if(!$validator->passes()) {
+            return response()->json(['status' => 0 , 'error' => $validator->errors()->toArray()]);
+        } else {
+            $email       = $request->email;
+            $username    = $request->username;
+            $role        = $request->role;
+
+            $dataUpdateMember = Admin::where('id','=', $request->id)->update([
+
+                'email'         => $email,
+                'username'      => $username,
+                'role'          => $role,
+
+            ]);
+        }
 
         if(!empty($dataUpdateMember)) {
             toastr()->success('Editing is successful');

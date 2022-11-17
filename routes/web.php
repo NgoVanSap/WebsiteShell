@@ -18,23 +18,6 @@ use App\Http\Controllers\websiteAll\BillCartController;
 use App\Http\Controllers\websiteAll\CustomerController;
 use App\Http\Controllers\websiteAll\SearchController;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -134,6 +117,15 @@ Route::middleware('admin')->group(function (){
 
 });
 
+Route::middleware('adminLogout')->group(function () {
+
+    Route::get('/admin/login', [AdminController::class, 'index']);
+    Route::post('/admin/login', [AdminController::class, 'postLoginAdmin'])->name('admin.login');
+
+});
+Route::get('/admin/logout', [AdminController::class, 'postLogoutAdmin'])->name('admin.logout');
+
+
 
 
 //WEBSITE
@@ -220,13 +212,6 @@ Route::prefix('/')->group(function () {
 
 
 
-    Route::middleware('adminLogout')->group(function () {
-
-        Route::get('/admin/login', [AdminController::class, 'index']);
-        Route::post('/admin/login', [AdminController::class, 'postLoginAdmin'])->name('admin.login');
-
-    });
-    Route::get('/admin/logout', [AdminController::class, 'postLogoutAdmin'])->name('admin.logout');
 
 
     // Route::fallback(function () {  return view('website.Error.404');  });

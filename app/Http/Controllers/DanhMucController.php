@@ -39,12 +39,12 @@ class DanhMucController extends Controller
         }
     }
 
-    public function createPostAjax(Request $request)
+    public function createPostAjax(Request $request , DanhMuc $category)
     {
 
 
         $validate = $request->validate([
-            'namecategory' => 'required|unique:danh_mucs'
+            'namecategory' => 'required|unique:danh_mucs,namecategory'.$category->id
         ],
         [
             'namecategory.required' => 'Category is not empty',

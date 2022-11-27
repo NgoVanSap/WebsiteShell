@@ -40,7 +40,7 @@ Route::middleware('admin')->group(function (){
             Route::get('/', [AdminController::class, 'homeAdmin'])->name('home.admin');
 
             Route::middleware('registerMember')->group(function () {
-                Route::get('/More-members', [AdminController::class, 'viewMoremembers'])->name('home.admin.Moremembers');
+                Route::get('/More-members', [AdminController::class, 'viewMoremembers']);
                 Route::post('/More-members', [AdminController::class, 'postMoremember'])->name('home.admin.Moremembers');
 
                 Route::middleware('deleteMember','editMember')->group(function () {
@@ -131,7 +131,8 @@ Route::get('/admin/logout', [AdminController::class, 'postLogoutAdmin'])->name('
 
 //WEBSITE
 
-Route::prefix('/')->group(function () {
+Route::get('/change/sizeAttribute/{idAttributes}' , [ChangeSizeController::class, 'changeSizeAttribute']);
+
     Route::get('/' , [WebsiteController::class, 'index'])->name('website.index');
 
     Route::get('detail/{slug}' , [WebsiteDetailProductController::class, 'index'])->name('product.slug.index');
@@ -193,12 +194,6 @@ Route::prefix('/')->group(function () {
     });
 
     Route::get('/test/mail' , [BillCartController::class, 'testMail']);
-
-
-
-
-
-
     Route::middleware('customerLogout')->group(function (){
 
         Route::get('login/register' , [CustomerController::class, 'viewLoginRegister'])->name('viewLoginRegister.website');
@@ -210,7 +205,6 @@ Route::prefix('/')->group(function () {
     Route::get('customer/logout' , [CustomerController::class, 'customerLogout'])->name('customerLogout.website');
 
     Route::get('search/ajax' , [SearchController::class, 'searchAjaxProduct'])->name('searchAjaxProduct.website');
-    Route::get('change/sizeAttribute/{idAttributes}' , [ChangeSizeController::class, 'changeSizeAttribute']);
 
 
 
@@ -219,6 +213,6 @@ Route::prefix('/')->group(function () {
 
     // Route::fallback(function () {  return view('website.Error.404');  });
 
-});
+
 
 

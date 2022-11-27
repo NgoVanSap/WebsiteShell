@@ -13,13 +13,14 @@ class ChangeSizeController extends Controller
 
         $changeSizeAttribute = Attribute::where('id',$idAttributes)->first();
 
-        if ($changeSizeAttribute->amount <= 1) {
+        if ($changeSizeAttribute->amount <=0) {
 
             return response()->json(['status' => 1]);
 
         } else {
 
-            return response()->json(['status' => 2]);
+
+            return response()->json(['status' => 2, 'data' => $changeSizeAttribute]);
 
         }
     }

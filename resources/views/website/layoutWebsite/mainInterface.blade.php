@@ -651,7 +651,6 @@
                                                             <div class="size-drop">
                                                                 <div class="btn-group">
                                                                     <div class="select-wrap">
-                                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                                         <select name="cart_id_attribute" data-id="{{ $productDetailModals->id }}" id="myselect1_{{ $productDetailModals->id }}" class="form-control target">
                                                                             @foreach ($productDetailModals->attribute as $productDetailModalSize)
                                                                             <option  value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
@@ -668,6 +667,7 @@
                                                                     <input type="text" value="1" name="quantity" id="quantity1_{{ $productDetailModals->id }}" class="plus-minus-box">
                                                                     <a class="inc qtybutton">+</a>
                                                                 </div>
+                                                                <div style="margin-left: 20px" class="icon pushQuantity_{{ $productDetailModals->id }}"><span class="ion-ios-arrow-down">( Number of products left {{ $productDetailModals->attribute[0]->amount }} )</span></div>
                                                         </div>
                                                     </div>
                                                     <div class="list-btn">

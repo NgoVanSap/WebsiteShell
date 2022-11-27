@@ -92,7 +92,7 @@
                                             <div class="btn-group">
                                                 <div class="select-wrap">
                                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                    <select name="cart_id_attribute" id="myselect3_{{ $detailProduct['id'] }}" class="form-control">
+                                                    <select name="cart_id_attribute" data-id="{{ $detailProduct['id'] }}" id="myselect3_{{ $detailProduct['id'] }}" class="form-control target">
                                                         @foreach ($detailProduct->attribute as $productDetailModalSize)
                                                         <option value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                         @endforeach
@@ -109,6 +109,7 @@
                                                 <input type="text" value="1" min="1" max="100" id="quantity3_{{ $detailProduct['id'] }}" name="quantity" class="plus-minus-box">
                                                 <a class="inc qtybutton">+</a>
                                             </div>
+                                            <div style="margin-left: 20px" class="icon pushQuantity_{{ $detailProduct['id'] }}"><span class="ion-ios-arrow-down">( Number of products left {{ $detailProduct->attribute[0]->amount }} )</span></div>
                                         </form>
                                     </div>
                                 </div>
@@ -306,13 +307,13 @@
                                             </h5>
                                                 <p>{{ $detailProduct['infomation'] }}</p>
                                                 <div class="all-choose">
-                                                    <div class="s-shoose">
+                                                    <div class="s-shoose ">
                                                         <h5>size</h5>
                                                         <div class="size-drop">
                                                             <div class="btn-group">
                                                                 <div class="select-wrap">
                                                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                                    <select name="cart_id_attribute" id="myselect2_{{ $detailProduct['id'] }}" class="form-control">
+                                                                    <select name="cart_id_attribute" data-id="{{ $detailProduct['id'] }}" id="myselect2_{{ $detailProduct['id'] }}" class="form-control target">
                                                                         @foreach ($detailProduct->attribute as $productDetailModalSize)
                                                                         <option value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                                         @endforeach
@@ -321,15 +322,15 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="s-shoose">
+                                                    <div class="s-shoose " style=" display: flex; align-items: center; ">
                                                         <h5>qty</h5>
-                                                        <form action="#" method="POST">
                                                             <div class="plus-minus">
                                                                 <a class="dec qtybutton">-</a>
                                                                 <input type="text" value="1" min="1" max="100" id="quantity2_{{ $detailProduct['id'] }}" name="quantity" class="plus-minus-box">
                                                                 <a class="inc qtybutton">+</a>
                                                             </div>
-                                                        </form>
+                                                            <div style="margin-left: 20px" class="icon pushQuantity_{{ $detailProduct['id'] }}"><span class="ion-ios-arrow-down">( Number of products left {{ $detailProduct->attribute[0]->amount }} )</span></div>
+
                                                     </div>
                                                 </div>
                                                 <div class="list-btn">
@@ -419,8 +420,7 @@
                                                             <div class="size-drop">
                                                                 <div class="btn-group">
                                                                     <div class="select-wrap">
-                                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                                        <select name="cart_id_attribute" id="myselect1_{{ $relatedProducts->id }}" class="form-control">
+                                                                        <select name="cart_id_attribute"  data-id="{{ $relatedProducts->id }}" id="myselect1_{{ $relatedProducts->id }}" class="form-control target">
                                                                             @foreach ($relatedProducts->attribute as $productDetailModalSize)
                                                                             <option  value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                                             @endforeach
@@ -436,6 +436,8 @@
                                                                     <input type="text" value="1" name="quantity" id="quantity1_{{ $relatedProducts->id }}" class="plus-minus-box">
                                                                     <a class="inc qtybutton">+</a>
                                                                 </div>
+                                                                <div style="margin-left: 20px" class="icon pushQuantity_{{ $relatedProducts->id }}"><span class="ion-ios-arrow-down">( Number of products left {{ $relatedProducts->attribute[0]->amount }} )</span></div>
+
                                                         </div>
                                                     </div>
                                                     <div class="list-btn">

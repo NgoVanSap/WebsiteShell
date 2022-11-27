@@ -1050,22 +1050,34 @@
 
 
         });
-        function changeSizeAttribute () {
+
+
+        function changeSizeAttributeIndex () {
             $( ".target" ).change(function() {
                 var idAttributes = $(this).find(":selected").val();
                 var thisDataID = $(this).data('id');
 
+
                 $.ajax({
-                    url:"change/sizeAttribute/"+idAttributes,
+                    url:"/change/sizeAttribute/" + idAttributes,
                     type: "GET",
                     success: function (data) {
+
+
+                        let _html_   = "";
                         if(data.status == 1) {
+
+
                             $(".addSizeClass_"+thisDataID+"").addClass('disabled');
 
                         } else {
+
+                            _html_ +='<span class="ion-ios-arrow-down">( Number of products left '+ data.data.amount +' )</span>';
                             $(".addSizeClass_"+thisDataID+"").removeClass('disabled');
 
                         }
+                    $(".pushQuantity_"+thisDataID+"").html(_html_);
+
 
                     }
 
@@ -1073,7 +1085,7 @@
 
             });
         }
-        changeSizeAttribute ();
+        changeSizeAttributeIndex ();
 
     });
 

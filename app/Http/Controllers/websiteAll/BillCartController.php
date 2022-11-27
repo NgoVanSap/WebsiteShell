@@ -127,7 +127,7 @@ class BillCartController extends Controller
 
             }
                 if($oder->count() > 0) {
-                    $products = array();
+
                 foreach ($oderAttributes as $amount) {
 
                     $updateAttribute = Attribute::find($amount['cart_id_attribute']);

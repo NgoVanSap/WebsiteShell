@@ -138,10 +138,6 @@ class BillCartController extends Controller
 
                 }
 
-
-
-
-
             $orderDetails = $this->orderItems->getOrderItems($id);
             $orderItem = DB::table('oder_item_checkouts')
             ->join('products','oder_item_checkouts.oder_product_id','=','products.id')
@@ -183,35 +179,5 @@ class BillCartController extends Controller
             ]);
 
         }
-    }
-
-    public function testMail(Request $request) {
-
-        if(!empty(Auth::guard('admin')->check())) {
-            $productViewCart = $this->viewCartList->getViewCartList();
-
-            $total = 0;
-            $transport = 15;
-            foreach ($productViewCart as $productViewCarts) {
-
-                $total += $productViewCarts->price_sale > 0 ? $productViewCarts->price_sale : $productViewCarts->price * $productViewCarts->quantity;
-
-            }
-            $total+=$transport;
-
-            $name = 'Ngo van sap';
-             Mail::send('website.emailCheckout.emailCheckOut',[
-                'productViewCart' => $productViewCart,
-
-            ], function($email) use ($name,$productViewCart) {
-                $email->subject('Cảm Ơn Qúy khách Đã Đặt Hàng');
-                $email->to('sapkuga@gmail.com',$name);
-
-            });
-
-
-
-        }
-
     }
 }

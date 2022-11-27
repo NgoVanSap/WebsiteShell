@@ -18,7 +18,7 @@ class CreateOderItemCheckoutsTable extends Migration
             $table->integer('oder_product_id');
             $table->integer('oder_user_id');
             $table->integer('oder_bill_cart_id');
-            $table->string('oder_cart_id_attribute');
+            $table->integer('oder_cart_id_attribute');
             $table->integer('oder_quantity');
             $table->double('oder_price');
             $table->string('oder_status');

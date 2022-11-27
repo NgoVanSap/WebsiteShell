@@ -17,7 +17,7 @@ class CreateTableProductAttributeTable extends Migration
             $table->id();
             $table->integer('product_id');
             $table->string('size');
-            $table->string('amount');
+            $table->integer('amount');
             $table->timestamps();
         });
     }

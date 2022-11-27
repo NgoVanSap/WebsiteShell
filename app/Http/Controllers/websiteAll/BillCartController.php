@@ -54,6 +54,7 @@ class BillCartController extends Controller
     public function postBillCartProduct(Request $request) {
         $userId = Auth::guard('customer')->id();
         $oder = Cart::where('user_id','=',$userId)->get();
+        $oderAttributes = Cart::with('Attributes')->where('user_id','=',$userId)->get();
         $dateNowOrder =  Carbon::now()->isoFormat('MM-DD-YYYY');
         $transport = 15;
         $total = $this->viewCartList->totalCheckout();
@@ -108,6 +109,8 @@ class BillCartController extends Controller
                  'amount_of_all_products'       => $amount_of_all_products,
                  'bill_status'                  => 1,
            ]);
+
+           $dataTime = billCart::where('bill_user_id',$userId)->orderBy('id', 'desc')->first();
            $id = $billCartUser->id;
            foreach($oder as $oderItems) {
 
@@ -123,17 +126,22 @@ class BillCartController extends Controller
                ]);
 
             }
+                if($oder->count() > 0) {
+                    $products = array();
+                foreach ($oderAttributes as $amount) {
 
-            if($data->count() > 0) {
-
-                $updateAttribute = Attribute::where('id','=',$data->oder_cart_id_attribute)->first();
-
-                if(!empty($updateAttribute)) {
-                    $updateAttribute->amount = $updateAttribute->amount - $data->oder_quantity;
+                    $updateAttribute = Attribute::find($amount['cart_id_attribute']);
+                    $updateAttribute->amount = $updateAttribute->amount -  $amount['quantity'];
                     $updateAttribute->save();
+
+                   }
+
                 }
 
-            }
+
+
+
+
             $orderDetails = $this->orderItems->getOrderItems($id);
             $orderItem = DB::table('oder_item_checkouts')
             ->join('products','oder_item_checkouts.oder_product_id','=','products.id')

@@ -17,7 +17,7 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->integer('product_id_cart');
             $table->integer('user_id');
-            $table->string('cart_id_attribute');
+            $table->integer('cart_id_attribute');
             $table->integer('quantity');
             $table->double('cart_price');
             $table->timestamps();

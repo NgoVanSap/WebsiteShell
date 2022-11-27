@@ -44,7 +44,7 @@ class CartController extends Controller
         $product  = Product::find($id);
         $data = Attribute::where('product_id',$request->car_detail)->get();
         $cartAdd = Cart::where('user_id', $request->user_id)->where('product_id_cart',$request->product_id_cart)->where('cart_id_attribute',$request->cart_id_attribute)->first();
-        $dataMountAttribute = Attribute::where('id', $request->cart_id_attribute)->first();
+        $dataMountAttribute = Attribute::where('id', $request->cart_id_attribute)->get();
 
 
 
@@ -55,12 +55,14 @@ class CartController extends Controller
                     return response()->json(['status' => 0 ]);
 
                 } else {
+                    foreach ($dataMountAttribute as $MountAttribute) {
 
-                    if($dataMountAttribute->amount < $request->quantity) {
+                        if($MountAttribute->amount < $request->quantity) {
 
                             return response()->json(['status' => 5,'error' =>'Quantity is greater than the remaining quantity' ]);
 
-                    } else {
+                        }
+                    }
                         if(!empty($cartAdd)) {
 
                             $cartAdd->quantity += $request->quantity;
@@ -79,7 +81,7 @@ class CartController extends Controller
                             return response()->json(['status' => 1,'success' =>'Add to cart successfully']);
 
                         }
-                    }
+
 
                 }
 

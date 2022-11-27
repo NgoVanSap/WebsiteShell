@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Attribute;
 
 class Cart extends Model
 {
@@ -18,4 +19,13 @@ class Cart extends Model
         'cart_id_attribute',
         'cart_price',
     ];
+
+
+    public function Attributes() {
+
+        return $this->hasMany(Attribute::class,'id');
+
+    }
+
+
 }

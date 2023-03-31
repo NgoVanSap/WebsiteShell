@@ -28,7 +28,7 @@
                                 <div class="product-img tab-content">
                                     <div class="simpleLens-container tab-pane fade in" id="sin-1">
                                         <div class="pro-type">
-                                            <span>new</span>
+                                            <span>Mới</span>
                                         </div>
                                         <a class="simpleLens-image" data-lens-image="{{asset('imgProduct/' . $detailProduct['image'])  }}" href="#"><img src="{{asset('imgProduct/' .$detailProduct['image'])  }}" alt="" class="simpleLens-big-image"></a>
                                     </div>
@@ -44,12 +44,12 @@
                                         @endphp
                                         @if ($days_count <= 15)
                                         <div class="pro-type">
-                                            <span>new</span>
+                                            <span>Mới</span>
                                         </div>
                                         @endif
                                         @if ($detailProduct['price_sale'] > 0)
                                             <div class="pro-type sell">
-                                                <span>sell</span>
+                                                <span>Bán</span>
                                             </div>
                                         @endif
                                         <a class="simpleLens-image" data-lens-image="{{asset('imgProduct/' . $detailProduct['image'])}}" href="#"><img src="{{asset('imgProduct/' . $detailProduct['image'])}}" alt="" class="simpleLens-big-image"><div class="simpleLens-mouse-cursor"></div></a>
@@ -71,7 +71,6 @@
                         <div class="quick-right">
                             <div class="list-text">
                                 <h3>{{ $detailProduct['name'] }}</h3>
-                                <span>Summer men’s fashion</span>
                                 <div class="ratting floatright">
                                     <p>( {{ $detailProductUserComment->count() }} Comments )</p>
                                 </div>
@@ -87,7 +86,7 @@
                                 <p>{{ $detailProduct['infomation'] }}</p>
                                 <div class="all-choose">
                                     <div class="s-shoose" style=" display: flex; align-items: center; ">
-                                        <h5>size</h5>
+                                        <h5 style=" font-size: 11px !important;text-transform: none; ">Kích thước: </h5>
                                         <div class="size-drop">
                                             <div class="btn-group">
                                                 <div class="select-wrap">
@@ -102,14 +101,14 @@
                                         </div>
                                     </div>
                                     <div class="s-shoose" style=" display: flex; align-items: center; ">
-                                        <h5>qty</h5>
+                                        <h5 style=" font-size: 11px !important;text-transform: none; ">Số lượng:</h5>
                                         <form action="#" method="POST">
                                             <div class="plus-minus">
                                                 <a class="dec qtybutton">-</a>
                                                 <input type="text" value="1" min="1" max="100" id="quantity3_{{ $detailProduct['id'] }}" name="quantity" class="plus-minus-box">
                                                 <a class="inc qtybutton">+</a>
                                             </div>
-                                            <div style="margin-left: 20px" class="icon pushQuantity_{{ $detailProduct['id'] }}"><span class="ion-ios-arrow-down">( Number of products left {{ $detailProduct->attribute[0]->amount }} )</span></div>
+                                            <div style="margin-left: 20px" class="icon pushQuantity_{{ $detailProduct['id'] }}"><span class="ion-ios-arrow-down">( Số lượng sản phẩm còn lại {{ $detailProduct->attribute[0]->amount }} )</span></div>
                                         </form>
                                     </div>
                                 </div>
@@ -117,8 +116,8 @@
                                     <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                     <input type="hidden" value="{{ $detailProduct['id'] }}" name="product_id_cart">
                                     <input type="hidden" value="{{ $detailProduct['price_sale'] > 0 ? $detailProduct['price_sale'] : $detailProduct['price'] }}" name="cart_price">
-                                    <a class="addCart-3"data-id="{{ $detailProduct['id'] }}">add to cart</a>
-                                    <a style="cursor: pointer" class="addWishList" data-id="{{ $detailProduct['id'] }}" data-user-id="{{ Auth::guard('customer')->id() }}">wishlist</a>
+                                    <a class="addCart-3"data-id="{{ $detailProduct['id'] }}">Thêm giỏ hàng</a>
+                                    <a style="cursor: pointer" class="addWishList" data-id="{{ $detailProduct['id'] }}" data-user-id="{{ Auth::guard('customer')->id() }}">Yêu thích</a>
                                     <a href="#" data-toggle="modal" data-target="#quick-view_{{  $detailProduct['slug_name'] }}">zoom</a>
                                 </div>
                                 <div class="share-tag clearfix">
@@ -144,7 +143,7 @@
             <div class="col-xs-12">
                 <div class="reviews padding60 margin-top">
                     <ul class="reviews-tab clearfix">
-                        <li class="active"><a data-toggle="tab" href="#reviews" aria-expanded="true">Reviews</a></li>
+                        <li class="active"><a data-toggle="tab" href="#reviews" aria-expanded="true">Nhận xét</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="info-reviews review-text tab-pane fade active in" id="reviews">
@@ -163,7 +162,7 @@
                                                 @if (Auth::guard('customer')->check())
                                                     value="{{Auth::guard('customer')->user()->usernameCus}}"
                                                 @endif
-                                                style=" margin-bottom: 0 !important; " placeholder="Your Name" >
+                                                style=" margin-bottom: 0 !important; " placeholder="Tên của bạn" >
                                                     <p class="text-danger error-text comment_user_name_error"></p>
                                             </div>
                                         </div>
@@ -173,19 +172,19 @@
                                                 @if (Auth::guard('customer')->check())
                                                     value="{{Auth::guard('customer')->user()->emailCus}}"
                                                 @endif
-                                                 style=" margin-bottom: 0 !important; " placeholder="Your Email">
+                                                 style=" margin-bottom: 0 !important; " placeholder="Email của bạn">
                                                     <p class="text-danger error-text comment_user_email_error"></p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="custom-mess margin-bottom-login">
-                                                <textarea name="comment_information" style=" margin-bottom: 0 !important; " id="comment_information" placeholder="Your Review" rows="2"></textarea>
+                                                <textarea name="comment_information" style=" margin-bottom: 0 !important; " id="comment_information" placeholder="Nhận xét của bạn" rows="2"></textarea>
                                                 <p class="text-danger error-text comment_information_error"></p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="submit-text">
-                                                <button id="submit-ReviewProduct" data-id="{{ $detailProduct['id'] }}">submit review</button>
+                                                <button id="submit-ReviewProduct" data-id="{{ $detailProduct['id'] }}">Gửi đánh giá</button>
                                             </div>
                                         </div>
                                     </div>
@@ -205,7 +204,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="section-title text-center">
-                    <h2>related Products</h2>
+                    <h2 style=" margin-bottom: 20px; ">Sản phẩm liên quan</h2>
                 </div>
             </div>
         </div>
@@ -293,9 +292,8 @@
                                         <div class="quick-right">
                                             <div class="list-text">
                                                 <h3>{{ $detailProduct->name }}</h3>
-                                                <span>Summer men’s fashion</span>
                                                 <div class="ratting floatright">
-                                                    <p>( {{ $detailProductUserComment->count() }} Comments )</p>
+                                                    <p>( {{ $detailProductUserComment->count() }} Bình luận )</p>
                                                 </div>
                                                 <h5>
                                                     @if ($detailProduct['price_sale'] > 0)
@@ -308,7 +306,7 @@
                                                 <p>{{ $detailProduct['infomation'] }}</p>
                                                 <div class="all-choose">
                                                     <div class="s-shoose ">
-                                                        <h5>size</h5>
+                                                        <h5 style=" font-size: 11px !important;text-transform: none; ">Kích thước:</h5>
                                                         <div class="size-drop">
                                                             <div class="btn-group">
                                                                 <div class="select-wrap">
@@ -323,13 +321,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="s-shoose " style=" display: flex; align-items: center; ">
-                                                        <h5>qty</h5>
+                                                        <h5 style=" font-size: 11px !important;text-transform: none; ">Số lượng:</h5>
                                                             <div class="plus-minus">
                                                                 <a class="dec qtybutton">-</a>
                                                                 <input type="text" value="1" min="1" max="100" id="quantity2_{{ $detailProduct['id'] }}" name="quantity" class="plus-minus-box">
                                                                 <a class="inc qtybutton">+</a>
                                                             </div>
-                                                            <div style="margin-left: 20px" class="icon pushQuantity_{{ $detailProduct['id'] }}"><span class="ion-ios-arrow-down">( Number of products left {{ $detailProduct->attribute[0]->amount }} )</span></div>
+                                                            <div style="margin-left: 20px" class="icon pushQuantity_{{ $detailProduct['id'] }}"><span class="ion-ios-arrow-down">( Số lượng sản phẩm còn lại {{ $detailProduct->attribute[0]->amount }} )</span></div>
 
                                                     </div>
                                                 </div>
@@ -338,8 +336,8 @@
                                                     <input type="hidden" value="{{ $detailProduct['price_sale'] > 0 ? $detailProduct['price_sale'] : $detailProduct['price'] }}" name="cart_price">
                                                     <input type="hidden" value="{{ $detailProduct['id'] }}" name="product_id_cart">
                                                     <input type="hidden" value="{{ $detailProduct['price_sale'] > 0 ? $detailProduct['price_sale'] : $detailProduct['price'] }}" name="price_cart_product">
-                                                    <a class="addCart-2"data-id="{{ $detailProduct['id'] }}">add to cart</a>
-                                                    <a style="cursor: pointer" class="addWishList" data-id="{{ $detailProduct['id'] }}" data-user-id="{{ Auth::guard('customer')->id() }}">wishlist</a>
+                                                    <a class="addCart-2"data-id="{{ $detailProduct['id'] }}">Thêm giỏ hàng</a>
+                                                    <a style="cursor: pointer" class="addWishList" data-id="{{ $detailProduct['id'] }}" data-user-id="{{ Auth::guard('customer')->id() }}">Yêu thích</a>
                                                 </div>
                                                 <div class="share-tag clearfix">
                                                     <ul class="blog-share floatleft">
@@ -403,7 +401,7 @@
                                                     <h3>{{ $relatedProducts->name }}</h3>
                                                     <span>Summer men’s fashion</span>
                                                     <div class="ratting floatright">
-                                                        <p>( {{ $relatedProducts->comments->count() }} Comments  )</p>
+                                                        <p>( {{ $relatedProducts->comments->count() }} Bình luận  )</p>
 
                                                     </div>
                                                     <h5>

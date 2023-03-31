@@ -57,15 +57,15 @@
                 <div class="sidebar left-sidebar">
                     <div class="s-side-text">
                         <div class="sidebar-title clearfix">
-                            <h4 class="floatleft">Categories</h4>
-                            <h5 class="floatright"><a href="#">All</a></h5>
+                            <h4 class="floatleft" style="font-family: ui-rounded !important;">danh mục</h4>
+                            <h5 class="floatright"><a href="#" style="font-family: ui-rounded !important;">tất cả</a></h5>
                         </div>
                         <div class="categories left-right-p">
                             <ul id="accordion" class="panel-group clearfix">
                                 <li class="panel">
                                     <div data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">
                                         <div class="medium-a">
-                                            Women & Men
+                                            Nữ & Nam
                                         </div>
                                     </div>
                                     <div class="paypal-dsc panel-collapse collapse" id="collapse2">
@@ -79,12 +79,12 @@
                                 <li class="panel">
                                     <div data-toggle="collapse" data-parent="#accordion" data-target="#collapse3">
                                         <div class="medium-a">
-                                            Sale
+                                            giảm giá
                                         </div>
                                     </div>
                                     <div class="paypal-dsc panel-collapse collapse" id="collapse3">
                                         <div class="normal-a">
-                                            <a href="{{ route('product.category.sale.index') }}">Sale Product</a>
+                                            <a href="{{ route('product.category.sale.index') }}">sản phẩm giảm giá</a>
                                         </div>
                                     </div>
                                 </li>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="s-side-text">
                         <div class="sidebar-title" style=" text-align: center; ">
-                            <h4>price & name</h4>
+                            <h4>giá & tên</h4>
                         </div>
                         <div class="size-select clearfix">
                             <a href="{{ route('searchAscendingProduct.index') }}" style=" width: 25% !important; ">
@@ -124,8 +124,8 @@
                     </div>
                     <div class="s-side-text">
                         <div class="sidebar-title clearfix">
-                            <h4 class="floatleft">size</h4>
-                            <h5 class="floatright"><a href="{{ route('product.all.index') }}">All</a></h5>
+                            <h4 class="floatleft" style="font-family: ui-rounded !important;">kích thước</h4>
+                            <h5 class="floatright"><a href="{{ route('product.all.index') }}" style="font-family: ui-rounded !important;">tất cả</a></h5>
                         </div>
                         <div class="size-select clearfix">
                             <a href="{{ route('searchSizeProduct.index',['size' => "S"]) }}">s</a>

@@ -211,9 +211,9 @@
                             <span><strong>$100.00</strong>   <del>$120.00</del></span>
                             <p class="come-p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed does eiusmodes tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venim, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam.</p>
                             <ul class="color-size">
-                                <li><span>Size</span><strong>:</strong> <a href="#">SL</a><a href="#">ML</a><a href="#">Xl</a></li>
-                                <li><span>Brand</span><strong>:</strong>Crazy Fashion</li>
-                                <li><span>category</span><strong>:</strong>Fashion   Men’s</li>
+                                <li><span>Kích thước</span><strong>:</strong> <a href="#">SL</a><a href="#">ML</a><a href="#">Xl</a></li>
+                                <li><span>Nhãn Hiệu</span><strong>:</strong>Crazy Fashion</li>
+                                <li><span>Danh mục</span><strong>:</strong>Fashion   Men’s</li>
                             </ul>
                             <div class="count-text clearfix">
                                 <ul id="countdown-1">
@@ -280,9 +280,9 @@
                 <div class="section-title text-center">
                     <div class="product-tab nav nav-tabs">
                         <ul>
-                            <li class="active"><a data-toggle="tab" href="#arrival">New Arrival <span>/</span></a></li>
-                            <li><a data-toggle="tab" href="#popular">Popular Product <span>/</span></a></li>
-                            <li><a data-toggle="tab" href="#best">Best Seller</a></li>
+                            <li class="active"><a data-toggle="tab" href="#arrival">Mới <span>/</span></a></li>
+                            <li><a data-toggle="tab" href="#popular">nổi bật <span>/</span></a></li>
+                            <li><a data-toggle="tab" href="#best">Giảm giá</a></li>
                         </ul>
                     </div>
                 </div>

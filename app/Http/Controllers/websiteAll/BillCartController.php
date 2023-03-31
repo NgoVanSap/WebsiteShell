@@ -147,7 +147,7 @@ class BillCartController extends Controller
             ->get();
 
 
-            SendMail::dispatch($request->bill_email,$orderItem,$billCartUser,$dateNowOrder)->delay(now()->addMinutes(1));
+            SendMail::dispatch($request->bill_email,$orderItem,$billCartUser,$dateNowOrder)->delay(now()->addSeconds(5));
 
             if(!empty($billCartUser)) {
                 return response()->json(['status' => 1,'success'=>'Order Success']);

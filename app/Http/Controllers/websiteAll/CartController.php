@@ -153,28 +153,27 @@ class CartController extends Controller
 
     public function updateCartProduct(Request $request ) {
 
-        $data = Attribute::where('product_id',$request->car_detail)->get();
         $cartAdd = Cart::where('user_id', $request->user_id)
-        ->where('product_id_cart',$request->product_id_cart)
-        ->where('cart_id_attribute',$request->cart_id_attribute)
+        ->where('product_id_cart', $request->product_id_cart)
+        ->where('cart_id_attribute', $request->cart_id_attribute)
         ->first();
-
-        if(!empty($cartAdd)) {
-
-            $cartAdd->quantity = $request->quantity;
-            $cartAdd->save();
+        if($cartAdd) {
+            $cartAdd->update(['quantity' => $request->quantity]);
         } else {
-
-            Cart::update([
+            Cart::create([
                 'cart_id_attribute' => $request->cart_id_attribute,
-                'product_id_cart'=> $request->product_id_cart,
-                'quantity'        => $request->new_qty,
-                'user_id'    => $request->user_id,
+                'product_id_cart' => $request->product_id_cart,
+                'quantity' => $request->quantity,
+                'user_id' => $request->user_id,
             ]);
-
         }
-        return response()->json(['status' => 1,'success' =>'Update cart successfully']);
+        return response()->json(['status' => 1, 'success' => 'Update cart successfully']);
 
+
+    }
+
+    public function deleteCart() {
+        return 1;
     }
 
 

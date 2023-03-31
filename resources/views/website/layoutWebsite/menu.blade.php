@@ -15,7 +15,7 @@
                         <div class="center floatleft">
                             <form action="{{ route('searchAjaxProduct.website') }}" method="get">
                                 <button type="submit"><i class="mdi mdi-magnify"></i></button>
-                                <input type="text" id="searchProduct" name="searchProduct" placeholder="Search within these results..." />
+                                <input type="text" id="searchProduct" name="searchProduct" placeholder="Tìm kiếm sản phẩm..." />
                             </form>
                             <div class="centerSearch" id="addClass">
                             </div>
@@ -43,10 +43,10 @@
                                 </li>
                                 <li><a href="#"><i class="mdi mdi-settings"></i></a>
                                     <ul>
-                                        <li><a href="{{ route('myAccount.website') }}">My account</a></li>
-                                        <li><a href="{{ route('viewCartProduct.website') }}">My cart</a></li>
-                                        <li><a href="{{ route('viewWishListProduct.website') }}">My wishlist</a></li>
-                                        <li><a href="{{ route('viewBillCartProduct.website') }}">Check out</a></li>
+                                        <li><a href="{{ route('myAccount.website') }}">Tài khoản</a></li>
+                                        <li><a href="{{ route('viewCartProduct.website') }}">Giỏ hàng</a></li>
+                                        <li><a href="{{ route('viewWishListProduct.website') }}">Yêu thích</a></li>
+                                        <li><a href="{{ route('viewBillCartProduct.website') }}">Thanh toán</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -55,11 +55,11 @@
                     <div class="mainmenu">
                         <nav>
                             <ul>
-                                <li><a href="{{ route('website.index') }}">Home</a></li>
-                                <li><a href="{{ route('product.all.index') }}">Shop</a>
+                                <li><a href="{{ route('website.index') }}">Trang chủ</a></li>
+                                <li><a href="{{ route('product.all.index') }}">Cửa hàng</a>
                                     <ul class="magamenu">
                                         <li class="banner"><a href="{{ route('product.all.index') }}"><img src="/assetsWebsite1/img/maga1.png" alt="" /></a></li>
-                                        <li><h5>men’s wear</h5>
+                                        <li><h5>Quần áo nam</h5>
                                             <ul>
                                                 @foreach ($category as $categoryProduct)
                                                 <li style=" margin-bottom: 15px; ">
@@ -70,11 +70,11 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Pages</a>
+                                <li><a href="#">Trang</a>
                                     <ul class="dropdown">
-                                        <li><a href="{{ route('viewWishListProduct.website') }}">Wishlist </a></li>
-                                        <li><a href="{{ route('viewBillCartProduct.website') }}">Checkout</a></li>
-                                        <li><a href="{{ route('viewCartProduct.website') }}">Cart</a></li>
+                                        <li><a href="{{ route('viewWishListProduct.website') }}">Yêu thích </a></li>
+                                        <li><a href="{{ route('viewBillCartProduct.website') }}">Thanh toán</a></li>
+                                        <li><a href="{{ route('viewCartProduct.website') }}">Giỏ hàng</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="blog.html">Blog</a>
@@ -159,12 +159,12 @@
 
                        </div>
                         <div class="total" id="append-hoverCart-total">
-                            <span >total:
+                            <span >Tổng tiền:
 
                             </span>
                         </div>
-                        <a class="goto" href="{{ route('viewCartProduct.website') }}">go to cart</a>
-                        <a class="out-menu" href="{{ route('viewBillCartProduct.website') }}">Check out</a>
+                        <a class="goto" href="{{ route('viewCartProduct.website') }}">Giỏ hàng</a>
+                        <a class="out-menu" href="{{ route('viewBillCartProduct.website') }}">Thanh toán</a>
                     </div>
                 </div>
             </div>

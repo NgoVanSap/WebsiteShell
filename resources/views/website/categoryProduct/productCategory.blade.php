@@ -57,15 +57,15 @@
                 <div class="sidebar left-sidebar">
                     <div class="s-side-text">
                         <div class="sidebar-title clearfix">
-                            <h4 class="floatleft">Categories</h4>
-                            <h5 class="floatright"><a href="#">All</a></h5>
+                            <h4 class="floatleft" style="font-family: ui-rounded !important;">Danh mục</h4>
+                            <h5 class="floatright"><a href="#" style="font-family: ui-rounded !important;">Tất cả</a></h5>
                         </div>
                         <div class="categories left-right-p">
                             <ul id="accordion" class="panel-group clearfix">
                                 <li class="panel">
                                     <div data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">
                                         <div class="medium-a">
-                                            Women & Men
+                                            Nữ & Nam
                                         </div>
                                     </div>
                                     <div class="paypal-dsc panel-collapse collapse" id="collapse2">
@@ -80,12 +80,12 @@
                                 <li class="panel">
                                     <div data-toggle="collapse" data-parent="#accordion" data-target="#collapse3">
                                         <div class="medium-a">
-                                            Sale
+                                            giảm giá
                                         </div>
                                     </div>
                                     <div class="paypal-dsc panel-collapse collapse" id="collapse3">
                                         <div class="normal-a">
-                                            <a href="{{ route('product.category.sale.index') }}">Sale Product</a>
+                                            <a href="{{ route('product.category.sale.index') }}">Sản phẩm giảm giá</a>
                                         </div>
                                     </div>
                                 </li>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="s-side-text">
                         <div class="sidebar-title" style=" text-align: center; ">
-                            <h4>price & name</h4>
+                            <h4>giá & Tên</h4>
                         </div>
                         <div class="size-select clearfix">
                             <a href="{{ route('searchAscendingProduct.index') }}" style=" width: 25% !important; ">
@@ -125,8 +125,8 @@
                     </div>
                     <div class="s-side-text">
                         <div class="sidebar-title clearfix">
-                            <h4 class="floatleft">size</h4>
-                            <h5 class="floatright"><a href="{{ route('product.all.index') }}">All</a></h5>
+                            <h4 class="floatleft" style="font-family: ui-rounded !important;">Kích thước</h4>
+                            <h5 class="floatright"><a href="{{ route('product.all.index') }}" style="font-family: ui-rounded !important;">Tất cả</a></h5>
                         </div>
                         <div class="size-select clearfix">
                             <a href="{{ route('searchSizeProduct.index',['size' => "S"]) }}">s</a>
@@ -218,7 +218,7 @@
                                                 <input type="hidden" value="{{ $dataProductCategorys->id }}" name="product_id_cart">
                                                 <input type="hidden" value="1" name="quantity">
                                                 <input type="hidden" value="{{ $dataProductCategorys->price_sale > 0 ? $dataProductCategorys->price_sale : $dataProductCategorys->price }}" name="cart_price">
-                                                <input type="hidden" value="{{ $dataProductCategorys->attribute[0]->size }}" name="cart_id_attribute">
+                                                <input type="hidden" value="{{ $dataProductCategorys->attribute[0]->id }}" name="cart_id_attribute">
                                                 <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                                 <a class="addCart" data-id="{{ $dataProductCategorys->id }}"><i  class="mdi mdi-cart"></i></a>
                                                 <a href="#" data-toggle="modal" data-target="#quick-view_{{ $dataProductCategorys->slug_name }}"><i class="mdi mdi-eye"></i></a>
@@ -287,7 +287,7 @@
                                                         <input type="hidden" value="{{ $dataProductCategorys->attribute[0]->size }}" name="cart_id_attribute">
                                                         <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                                         <a class="addCart" data-id="{{ $dataProductCategorys->id }}"><i  class="mdi mdi-cart"></i></a>
-                                                        <a style="cursor: pointer" class="addWishList" data-id="{{ $dataProductCategorys->id }}" data-user-id="{{ Auth::guard('customer')->id() }}">wishlist</a>
+                                                        <a style="cursor: pointer" class="addWishList" data-id="{{ $dataProductCategorys->id }}" data-user-id="{{ Auth::guard('customer')->id() }}">yêu thích</a>
                                                         <a href="#" data-toggle="modal" data-target="#quick-view_{{ $dataProductCategorys->slug_name }}">zoom</a>
                                                     </div>
                                                 </div>
@@ -364,7 +364,7 @@
                                                     <h3>{{ $productDetailModals->name }}</h3>
                                                     <span>Summer men’s fashion</span>
                                                     <div class="ratting floatright">
-                                                        <p>( {{ $productDetailModals->comments->count() }} Comments  )</p>
+                                                        <p>( {{ $productDetailModals->comments->count() }} Bình luận  )</p>
                                                     </div>
                                                     <h5>
                                                         @if ($productDetailModals->price_sale > 0)
@@ -383,7 +383,7 @@
                                                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                                         <select name="cart_id_attribute" id="myselect1_{{ $productDetailModals->id }}" class="form-control">
                                                                             @foreach ($productDetailModals->attribute as $productDetailModalSize)
-                                                                            <option  value="{{ $productDetailModalSize->size }}">{{ $productDetailModalSize->size }}</option>
+                                                                            <option  value="{{ $productDetailModalSize->id }}">{{ $productDetailModalSize->size }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -404,8 +404,8 @@
                                                     <input type="hidden" value="{{ Auth::guard('customer')->id() }}" name="user_id">
                                                     <input type="hidden" value="{{ $productDetailModals->id }}" name="product_id_cart">
                                                     <input type="hidden" value="{{ $productDetailModals->price_sale > 0 ? $productDetailModals->price_sale : $productDetailModals->price }}" name="price_cart_product">
-                                                    <a class="addCart-2" data-id="{{ $productDetailModals->id }}">add to cart</a>
-                                                    <a style="cursor: pointer" class="addWishList" data-id="{{ $productDetailModals->id }}" data-user-id="{{ Auth::guard('customer')->id() }}">wishlist</a>
+                                                    <a class="addCart-2" data-id="{{ $productDetailModals->id }}">Thêm giỏ hàng</a>
+                                                    <a style="cursor: pointer" class="addWishList" data-id="{{ $productDetailModals->id }}" data-user-id="{{ Auth::guard('customer')->id() }}">yêu thích</a>
                                                     </div>
                                                     <div class="share-tag clearfix">
                                                         <ul class="blog-share floatleft">

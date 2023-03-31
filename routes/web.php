@@ -30,6 +30,10 @@ use App\Http\Controllers\websiteAll\WebsiteDetailProductController;
 |
 */
 
+Route::get('/delete/Cart/alo/{id}' , function($id){
+        return $id;
+    })->name('deleteCartProduct.website');
+
 //ADMIN
 Route::middleware('admin')->group(function (){
 
@@ -127,11 +131,11 @@ Route::middleware('adminLogout')->group(function () {
 Route::get('/admin/logout', [AdminController::class, 'postLogoutAdmin'])->name('admin.logout');
 
 
+Route::get('/index/123' , [CartController::class, 'deleteCart']);
 
 
 //WEBSITE
 
-Route::get('/change/sizeAttribute/{idAttributes}' , [ChangeSizeController::class, 'changeSizeAttribute']);
 
     Route::get('/' , [WebsiteController::class, 'index'])->name('website.index');
 
@@ -154,9 +158,10 @@ Route::get('/change/sizeAttribute/{idAttributes}' , [ChangeSizeController::class
     Route::get('/view/Cart' , [CartController::class, 'viewCartProduct'])->name('viewCartProduct.website');
     Route::get('/load/Cart' , [CartController::class, 'loadCartProduct'])->name('loadCartProduct.website');
     Route::get('/load/Coupon' , [CartController::class, 'loadCouponProduct'])->name('loadCouponProduct.website');
-    Route::post('/update/Cart' , [CartController::class, 'updateCartProduct'])->name('updateCartProduct.website');
+    Route::post('/update/Cart' , [CartController::class, 'updateCartProduct']);
     Route::post('/coupon/bill' , [CartController::class, 'couponBillProduct'])->name('couponBillProduct.website');
     Route::get('/delete/Cart/{id}' , [CartController::class, 'deleteCartProduct'])->name('deleteCartProduct.website');
+
 
 
     //Wishlist
@@ -206,12 +211,14 @@ Route::get('/change/sizeAttribute/{idAttributes}' , [ChangeSizeController::class
 
     Route::get('search/ajax' , [SearchController::class, 'searchAjaxProduct'])->name('searchAjaxProduct.website');
 
+    Route::get('/change/sizeAttribute/{idAttributes}' , [ChangeSizeController::class, 'changeSizeAttribute']);
 
 
 
 
 
     // Route::fallback(function () {  return view('website.Error.404');  });
+
 
 
 

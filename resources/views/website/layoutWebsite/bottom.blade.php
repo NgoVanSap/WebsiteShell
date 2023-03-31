@@ -60,6 +60,12 @@
 
 </script>
 <script>
+
+$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $(document).ready(function(){
 
         function number_format (number, decimals, dec_point, thousands_sep) {
@@ -94,7 +100,7 @@
                     var totals   = 0;
                     var transport = 15;
                     var thanhTien = 0;
-                    console.log(response);
+                    console.log(data);
 
                     data.forEach((x) => {
                                 var priceEachProduct = x.price_sale ? x.price_sale : x.price;
@@ -107,7 +113,7 @@
                                 _html +=  '<a href="/detail/'+x.slug_name+'"><img src="/imgProduct/'+x.image+'" alt="Add Product"></a>';
                                 _html +=  '<div class="items-dsc">';
                                 _html +=  '<h5><a href="/detail/'+x.slug_name+'">'+x.name+'</a></h5>';
-                                _html +=  '<p class="itemcolor">Size   : <span>'+x.cart_id_attribute+'</span></p>';
+                                _html +=  '<p class="itemcolor">Size   : <span>'+x.cart_attribute_size+'</span></p>';
                                 _html +=  '</div>';
                                 _html +=  '</td>';
                                 _html +=  '<td>$'+number_format(priceEachProduct,1,'.',',')+'</td>';
@@ -132,17 +138,17 @@
                             html += '<table>';
                             html += '<tbody>';
                             html += '<tr>';
-                            html += '<th>Cart Subtotal</th>';
+                            html += '<th>Tổng giỏ hàng</th>';
                             html += '<td class="append-success">$'+number_format(total,1,'.',',')+'</td>';
                             html += '</tr>';
                             html += '<tr>';
-                            html += '<th>Shipping and Handing</th>';
+                            html += '<th>Phí giao hàng</th>';
                             html += '<td>$'+number_format(transport,1,'.',',')+'</td>';
                             html += '</tr>';
                             html += '</tbody>';
                             html += '<tfoot>';
                             html += '<tr>';
-                            html += '<th class="tfoot-padd">Order total</th>';
+                            html += '<th class="tfoot-padd">Tổng hóa đơn</th>';
                             html += '<td class="tfoot-padd">$'+number_format(totals,1,'.',',')+'</td>';
                             html += '</tr>';
                             html += '</tfoot>';
@@ -252,6 +258,8 @@
                     var total   = 0;
                     var itemsDem = 0;
 
+                    console.log(data);
+
                     data.forEach((x) => {
                         var priceEachProduct = x.price_sale ? x.price_sale : x.price;
                         var thanhTien = priceEachProduct * x.quantity;
@@ -263,7 +271,7 @@
                         _html +='<div class="menu-cart-text">';
                         _html +='<a href="/detail/'+x.slug_name+'"><h5>'+x.name+'</h5></a>';
                         _html +='<span>X'+x.quantity+'</span>';
-                        _html +='<span>Size : '+x.cart_id_attribute+'</span>';
+                        _html +='<span>Size : '+x.cart_attribute_size+'</span>';
                         _html +='<strong>$'+number_format(priceEachProduct,1,'.',',')+'</strong>';
                         _html +='</div>'
                         _html +='</div>';
@@ -418,6 +426,8 @@
 
 
             }
+
+            console.log(payload);
             $.ajax({
                 url:"/add/ToCart/"+ getID,
                 type:"POST",
@@ -798,6 +808,12 @@
 
 
         $(document).on('click', '.qtybuttonCart', function() {
+
+            $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
             var $button = $(this);
             var oldValue = $button.parent().find("input").val();
             if(oldValue < 1) {
@@ -806,7 +822,6 @@
             if ($button.text() == "+") {
                 var newVal = parseFloat(oldValue) + 1;
             } else {
-                // Don't allow decrementing below zero
                 if (oldValue >= 2) {
                     var newVal = parseFloat(oldValue) - 1;
 
@@ -820,24 +835,26 @@
             var cart_id_attribute = $(this).data('cartattribute');
             var product_id_cart  = $(this).data('id');
             var user_id  = $(this).data('user');
+            var payload = {
+                'cart_id_attribute' : cart_id_attribute,
+                'product_id_cart'   : product_id_cart,
+                'quantity'          : newVal,
+                'user_id'           : user_id,
+            }
 
+            console.log(payload);
             $.ajax({
-                        url     : "/update/Cart",
-                        type    : "POST",
-                        data    : {
-                            'cart_id_attribute' : cart_id_attribute,
-                            'product_id_cart': product_id_cart,
-                            'quantity'            : newVal,
-                            'user_id'    : user_id,
-                        },
-                        success : function ($res) {
+                    url     : "/update/Cart",
+                    type    : "POST",
+                    data    : payload,
+                    success : function ($res) {
 
-                            if($res.status == 1) {
-                            loadCartGioHang();
-                            loadCart();
-                            loadCartGioHangHover();
-                            }
-                        },
+                        if($res.status == 1) {
+                        loadCartGioHang();
+                        loadCart();
+                        loadCartGioHangHover();
+                        }
+                    },
                 });
         });
 
